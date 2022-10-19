@@ -6,6 +6,8 @@ void ApplyStencil(unsigned char *img_in, unsigned char *img_out, int width, int 
 	unsigned char val_out;
 
 	for (int i = 1; i < height-1; i++)
+		#pragma ivdep
+		#pragma vector aligned
 		for (int j = 1; j < width-1; j++) {
 			val = img_in[(i  )*width + j];
 			val +=	-img_in[(i-1)*width + j-1] -   img_in[(i-1)*width + j] - img_in[(i-1)*width + j+1] 
@@ -23,8 +25,8 @@ void ApplyStencil(unsigned char *img_in, unsigned char *img_out, int width, int 
 }
 
 void CopyImage(unsigned char *img_in, unsigned char *img_out, int width, int height) {
-
 	for (int i = 0; i < height; i++)
+		#pragma omp simd
 		for (int j = 0; j < width; j++)
 			img_in[i*width + j] = img_out[i*width + j];
 }

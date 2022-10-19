@@ -59,6 +59,7 @@ unsigned char* readImage(char const * file_name, int *width, int *height) {
 	pixel = (unsigned char*)malloc(sizeof(unsigned char)* (*width)* (*height));
 
 	for(int i = 0; i < *height; i++)
+		#pragma vector aligned
 		for(int j = 0; j < *width; j++)
 			pixel[i* (*width)+j] = (unsigned char)row[i][j];
 

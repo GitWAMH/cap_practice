@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 	printf("\033[1m%5s %15s %15s %15s\033[0m\n", "Step", "Time, ms", "GB/s", "GFLOP/s"); fflush(stdout);
 
 	double t, dt, g, dg, f, df;
-
+	#pragma omp simd
 	for (int iTrial = 1; iTrial <= nTrials; iTrial++) {
 		const double t0 = get_time_sec();
 		ApplyStencil(img_in, img_out, width, height);
