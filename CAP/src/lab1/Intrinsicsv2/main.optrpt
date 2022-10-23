@@ -1,0 +1,163 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.5.0 Build 20211109_000000
+
+Compiler options: -I. -O2 -qopt-report=5 -c -o main.o
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char **)) [1/2=50.0%] main.c(28,33)
+  -> EXTERN: (34,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (35,3) exit(int)
+  -> EXTERN: (38,12) readImage(const char *, int *, int *)
+  -> EXTERN: (39,28) malloc(size_t)
+  -> EXTERN: (41,2) printf(const char *__restrict__, ...)
+  -> EXTERN: (42,2) printf(const char *__restrict__, ...)
+  -> EXTERN: (43,2) printf(const char *__restrict__, ...)
+  -> EXTERN: (43,87) fflush(FILE *)
+  -> INLINE: (48,21) get_time_sec() (isz = 10) (sz = 15)
+    -> EXTERN: (18,2) gettimeofday(struct timeval *__restrict__, void *__restrict__)
+  -> EXTERN: (49,3) ApplyStencil(unsigned char *, unsigned char *, int, int)
+  -> INLINE: (50,21) get_time_sec() (isz = 10) (sz = 15)
+    -> EXTERN: (18,2) gettimeofday(struct timeval *__restrict__, void *__restrict__)
+  -> EXTERN: (67,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (69,3) fflush(FILE *)
+  -> EXTERN: (72,3) CopyImage(unsigned char *, unsigned char *, int, int)
+  -> EXTERN: (76,2) writeImage(const char *, unsigned char *, int, int)
+  -> EXTERN: (78,2) free(void *)
+  -> EXTERN: (79,2) free(void *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at main.c(47,2)
+   remark #15305: vectorization support: vector length 2
+   remark #15427: loop was completely unrolled
+   remark #15309: vectorization support: normalized vectorization overhead 0.023
+   remark #15525: call to function 'gettimeofday(struct timeval *__restrict__, void *__restrict__)' is serialized   [ main.c(18,2) ]
+   remark #15525: call to function 'gettimeofday(struct timeval *__restrict__, void *__restrict__)' is serialized   [ main.c(18,2) ]
+   remark #15525: call to function 'printf(const char *__restrict__, ...)' is serialized   [ main.c(67,3) ]
+   remark #15525: call to function 'fflush(FILE *)' is serialized   [ main.c(69,3) ]
+   remark #15301: SIMD LOOP WAS VECTORIZED
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 788 
+   remark #15477: vector cost: 842.500 
+   remark #15478: estimated potential speedup: 0.910 
+   remark #15485: serialized function calls: 6
+   remark #15488: --- end vector cost summary ---
+   remark #15489: --- begin vector function matching report ---
+   remark #15490: Function call: gettimeofday(struct timeval *__restrict__, void *__restrict__) with simdlen=2, actual parameter types: (uniform,uniform)   [ main.c(18,2) ]
+   remark #26037: Library function call   [ main.c(18,2) ]
+   remark #15490: Function call: gettimeofday(struct timeval *__restrict__, void *__restrict__) with simdlen=2, actual parameter types: (uniform,uniform)   [ main.c(18,2) ]
+   remark #26037: Library function call   [ main.c(18,2) ]
+   remark #15490: Function call: ApplyStencil(unsigned char *, unsigned char *, int, int) with simdlen=2, actual parameter types: (uniform,uniform,uniform,uniform)   [ main.c(49,3) ]
+   remark #15545: SIMD annotation was not seen, consider adding 'declare simd' directives at function declaration 
+   remark #15490: Function call: printf(const char *__restrict__, ...) with simdlen=2, actual parameter types: (uniform,linear:1,uniform,uniform,uniform,vector)   [ main.c(67,3) ]
+   remark #26037: Library function call   [ main.c(67,3) ]
+   remark #15490: Function call: fflush(FILE *) with simdlen=2, actual parameter types: (uniform)   [ main.c(69,3) ]
+   remark #26037: Library function call   [ main.c(69,3) ]
+   remark #15490: Function call: CopyImage(unsigned char *, unsigned char *, int, int) with simdlen=2, actual parameter types: (uniform,uniform,uniform,uniform)   [ main.c(72,3) ]
+   remark #15545: SIMD annotation was not seen, consider adding 'declare simd' directives at function declaration 
+   remark #15493: --- end vector function matching report ---
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+main.c(28,33):remark #34051: REGISTER ALLOCATION : [main] main.c:28
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   21[ rax rdx rcx rbx rsi rdi r8 r12-r15 zmm0-zmm9]
+        
+    Routine temporaries
+        Total         :     216
+            Global    :      42
+            Local     :     174
+        Regenerable   :      43
+        Spilled       :      23
+        
+    Routine stack
+        Variables     :      12 bytes*
+            Reads     :      10 [2.57e+00 ~ 2.6%]
+            Writes    :       2 [2.07e-01 ~ 0.2%]
+        Spills        :     256 bytes*
+            Reads     :      22 [9.65e+00 ~ 9.7%]
+            Writes    :      18 [8.08e+00 ~ 8.1%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: get_time_sec()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (get_time_sec()) [2/2=100.0%] main.c(14,22)
+  -> EXTERN: (18,2) gettimeofday(struct timeval *__restrict__, void *__restrict__)
+
+
+    Report from: Code generation optimizations [cg]
+
+main.c(14,22):remark #34051: REGISTER ALLOCATION : [get_time_sec] main.c:14
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :    4[ rax rsi rdi zmm0]
+        
+    Routine temporaries
+        Total         :      14
+            Global    :       6
+            Local     :       8
+        Regenerable   :       3
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
