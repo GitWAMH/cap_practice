@@ -44,9 +44,9 @@ unsigned char* readImage(char const * file_name, int *width, int *height) {
 
 	// Read the image data
 	setjmp(png_jmpbuf(ptr));
-	png_bytep* row = (png_bytep*) malloc(sizeof(png_bytep) * *height);
+	png_bytep* row = (png_bytep*) _mm_malloc(sizeof(png_bytep) * *height, 32);
 	for (int i = 0; i < *height; i++)
-		row[i] = (png_byte*) malloc(png_get_rowbytes(ptr, info));  
+		row[i] = (png_byte*) _mm_malloc(png_get_rowbytes(ptr, info), 32);  
 	png_read_image(ptr, row);
 
 	if(png_get_rowbytes(ptr, info) != width_png) {
@@ -56,7 +56,7 @@ unsigned char* readImage(char const * file_name, int *width, int *height) {
 	fclose(fp);
 
 	// Convert from png_bytep to byte
-	pixel = (unsigned char*)malloc(sizeof(unsigned char)* (*width)* (*height));
+	pixel = (unsigned char*)_mm_malloc(sizeof(unsigned char)* (*width)* (*height), 32);
 
 	for(int i = 0; i < *height; i++)
 		#pragma vector aligned
@@ -64,8 +64,8 @@ unsigned char* readImage(char const * file_name, int *width, int *height) {
 			pixel[i* (*width)+j] = (unsigned char)row[i][j];
 
 	for (int i = 0; i < *height; i++)
-		free(row[i]);
-	free(row);
+		_mm_free(row[i]);
+	_mm_free(row);
 
 	return(pixel);
 }
@@ -90,7 +90,7 @@ void writeImage(char const * file_name, unsigned char *pixel, int width, int hei
 	png_write_info(ptr, info);
 
 	// Contents of the file
-	png_bytep row = (png_bytep) malloc(sizeof(png_byte)*width);
+	png_bytep row = (png_bytep) _mm_malloc(sizeof(png_byte)*width, 32);
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
 			png_byte t = (png_byte)pixel[i*width+j];
@@ -106,7 +106,7 @@ void writeImage(char const * file_name, unsigned char *pixel, int width, int hei
 	png_free_data(ptr, info, PNG_FREE_ALL, -1);
 	png_destroy_write_struct(&ptr, (png_infopp)NULL);
 	fclose(fp);
-	free(row);
+	_mm_free(row);
 }
 
 

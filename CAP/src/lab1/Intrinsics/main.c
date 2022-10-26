@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 	}
 
 	img_in  = readImage(argv[1], &width, &height);
-	img_out = (unsigned char*)malloc(sizeof(unsigned char)* width * height);
+	img_out = (unsigned char*)_mm_malloc(sizeof(unsigned char)* width * height,32);
 
 	printf("\n\033[1mEdge detection with a 3x3 stencil\033[0m\n");
 	printf("\nImage size: %d x %d\n\n", width, height);
@@ -75,8 +75,8 @@ int main(int argc, char **argv) {
 
 	writeImage("test_out.png", img_out, width, height);
 
-	free(img_in);
-	free(img_out);
+	_mm_free(img_in);
+	_mm_free(img_out);
 
 	return(0);
 }

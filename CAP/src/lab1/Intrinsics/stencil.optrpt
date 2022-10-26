@@ -2,15 +2,11 @@ Intel(R) Advisor can now assist with vectorization and show optimization
   report messages with your source code.
 See "https://software.intel.com/en-us/intel-advisor-xe" for details.
 
-Intel(R) C Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.5.0 Build 20211109_000000
+Intel(R) C Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.7.0 Build 20220726_000000
 
-Compiler options: -I. -O2 -qopt-report=5 -c -o stencil.o
+Compiler options: -I. -O2 -qopt-report=3 -c -o stencil.o
 
     Report from: Interprocedural optimizations [ipo]
-
-  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
-  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
-  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
 
 INLINING OPTION VALUES:
   -inline-factor: 100
@@ -20,84 +16,68 @@ INLINING OPTION VALUES:
   -inline-max-per-routine: 10000
   -inline-max-per-compile: 500000
 
-In the inlining report below:
-   "sz" refers to the "size" of the routine. The smaller a routine's size,
-      the more likely it is to be inlined.
-   "isz" refers to the "inlined size" of the routine. This is the amount
-      the calling routine will grow if the called routine is inlined into it.
-      The compiler generally limits the amount a routine can grow by having
-      routines inlined into it.
 
 Begin optimization report for: ApplyStencil(unsigned char *, unsigned char *, int, int)
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (ApplyStencil(unsigned char *, unsigned char *, int, int)) [1/2=50.0%] stencil.c(3,89)
+INLINE REPORT: (ApplyStencil(unsigned char *, unsigned char *, int, int)) [1] stencil.c(5,89)
+  -> EXTERN: (25,19) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (25,40) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (25,61) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (25,82) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (25,103) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (25,124) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (29,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (30,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (31,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (33,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (34,10) _mm256_adds_epu8(union __m256i, union __m256i)
+  -> EXTERN: (35,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (37,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (38,10) _mm256_subs_epu8(union __m256i, union __m256i)
+  -> EXTERN: (39,10) _mm256_subs_epu8(union __m256i, union __m256i)
 
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at stencil.c(8,2)
-   remark #15542: loop was not vectorized: inner loop was already vectorized
+LOOP BEGIN at stencil.c(9,2)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
 
    LOOP BEGIN at stencil.c(11,3)
-      remark #15388: vectorization support: reference img_in[i*width+j] has aligned access   [ stencil.c(12,10) ]
-      remark #15388: vectorization support: reference img_in[(i-1)*width+j] has aligned access   [ stencil.c(13,42) ]
-      remark #15388: vectorization support: reference img_in[(i-1)*width+j-1] has aligned access   [ stencil.c(13,12) ]
-      remark #15388: vectorization support: reference img_in[(i-1)*width+j+1] has aligned access   [ stencil.c(13,68) ]
-      remark #15388: vectorization support: reference img_in[i*width+j-1] has aligned access   [ stencil.c(14,7) ]
-      remark #15388: vectorization support: reference img_in[i*width+j] has aligned access   [ stencil.c(14,37) ]
-      remark #15388: vectorization support: reference img_in[i*width+j+1] has aligned access   [ stencil.c(14,63) ]
-      remark #15388: vectorization support: reference img_in[(i+1)*width+j-1] has aligned access   [ stencil.c(15,7) ]
-      remark #15388: vectorization support: reference img_in[(i+1)*width+j] has aligned access   [ stencil.c(15,37) ]
-      remark #15388: vectorization support: reference img_in[(i+1)*width+j+1] has aligned access   [ stencil.c(15,63) ]
-      remark #15388: vectorization support: reference img_out[i*width+j] has aligned access   [ stencil.c(23,4) ]
-      remark #15305: vectorization support: vector length 8
-      remark #15309: vectorization support: normalized vectorization overhead 0.458
-      remark #15300: LOOP WAS VECTORIZED
-      remark #15450: unmasked unaligned unit stride loads: 10 
-      remark #15451: unmasked unaligned unit stride stores: 1 
-      remark #15475: --- begin vector cost summary ---
-      remark #15476: scalar cost: 71 
-      remark #15477: vector cost: 9.000 
-      remark #15478: estimated potential speedup: 7.140 
-      remark #15487: type converts: 11 
-      remark #15488: --- end vector cost summary ---
-   LOOP END
-
-   LOOP BEGIN at stencil.c(11,3)
-   <Remainder loop for vectorization>
+   <Peeled>
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between img_in[i*width+j] (18:17) and img_out[i*width+j] (41:4)
    LOOP END
 LOOP END
 
     Report from: Code generation optimizations [cg]
 
-stencil.c(14,37):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 1 }, step { 1 }, types { I8-V64, I8-V64, I8-V64 }, number of elements { 8 }, select mask { 0x000000007 }.
-stencil.c(14,37):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 1 }, step { 1 }, types { I8-V64, I8-V64, I8-V64 }, number of elements { 8 }, select mask { 0x000000007 }.
-stencil.c(14,37):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 1 }, step { 1 }, types { I8-V64, I8-V64, I8-V64 }, number of elements { 8 }, select mask { 0x000000007 }.
-stencil.c(3,89):remark #34051: REGISTER ALLOCATION : [ApplyStencil] stencil.c:3
+stencil.c(5,89):remark #34051: REGISTER ALLOCATION : [ApplyStencil] stencil.c:5
 
     Hardware registers
         Reserved     :    2[ rsp rip]
         Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
         Callee-save  :    6[ rbx rbp r12-r15]
-        Assigned     :   31[ rax rdx rcx rbx rbp rsi rdi r8-r15 zmm0-zmm15]
+        Assigned     :   30[ rax rdx rcx rbx rsi rdi r8-r15 zmm0-zmm15]
         
     Routine temporaries
-        Total         :     111
-            Global    :      35
-            Local     :      76
-        Regenerable   :       5
-        Spilled       :      12
+        Total         :      48
+            Global    :      21
+            Local     :      27
+        Regenerable   :       1
+        Spilled       :       5
         
     Routine stack
         Variables     :       0 bytes*
             Reads     :       0 [0.00e+00 ~ 0.0%]
             Writes    :       0 [0.00e+00 ~ 0.0%]
-        Spills        :      96 bytes*
-            Reads     :      12 [1.55e+00 ~ 1.5%]
-            Writes    :      12 [1.02e+00 ~ 1.0%]
+        Spills        :      40 bytes*
+            Reads     :       5 [7.28e-01 ~ 0.7%]
+            Writes    :       5 [7.28e-01 ~ 0.7%]
     
     Notes
     
@@ -111,26 +91,22 @@ Begin optimization report for: CopyImage(unsigned char *, unsigned char *, int, 
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (CopyImage(unsigned char *, unsigned char *, int, int)) [2/2=100.0%] stencil.c(27,86)
+INLINE REPORT: (CopyImage(unsigned char *, unsigned char *, int, int)) [2] stencil.c(46,86)
 
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
 
 
-LOOP BEGIN at stencil.c(28,2)
+LOOP BEGIN at stencil.c(47,2)
    remark #15542: loop was not vectorized: inner loop was already vectorized
 
-   LOOP BEGIN at stencil.c(30,3)
+   LOOP BEGIN at stencil.c(49,3)
    <Peeled loop for vectorization>
       remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
       remark #25015: Estimate of max trip count of loop=15
    LOOP END
 
-   LOOP BEGIN at stencil.c(30,3)
-      remark #15388: vectorization support: reference img_in[i*width+j] has aligned access   [ stencil.c(31,4) ]
-      remark #15388: vectorization support: reference img_out[i*width+j] has aligned access   [ stencil.c(31,26) ]
-      remark #15305: vectorization support: vector length 16
-      remark #15309: vectorization support: normalized vectorization overhead 2.000
+   LOOP BEGIN at stencil.c(49,3)
       remark #15301: SIMD LOOP WAS VECTORIZED
       remark #15448: unmasked aligned unit stride loads: 1 
       remark #15449: unmasked aligned unit stride stores: 1 
@@ -142,12 +118,12 @@ LOOP BEGIN at stencil.c(28,2)
       remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
    LOOP END
 
-   LOOP BEGIN at stencil.c(30,3)
+   LOOP BEGIN at stencil.c(49,3)
    <Alternate Alignment Vectorized Loop>
       remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
    LOOP END
 
-   LOOP BEGIN at stencil.c(30,3)
+   LOOP BEGIN at stencil.c(49,3)
    <Remainder loop for vectorization>
       remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
    LOOP END
@@ -155,7 +131,7 @@ LOOP END
 
     Report from: Code generation optimizations [cg]
 
-stencil.c(27,86):remark #34051: REGISTER ALLOCATION : [CopyImage] stencil.c:27
+stencil.c(46,86):remark #34051: REGISTER ALLOCATION : [CopyImage] stencil.c:46
 
     Hardware registers
         Reserved     :    2[ rsp rip]
