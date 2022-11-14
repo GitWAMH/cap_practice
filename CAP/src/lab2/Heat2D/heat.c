@@ -49,22 +49,27 @@ static void step(unsigned int source_x, unsigned int source_y, const float *rest
     float dx = 0.01f; float dx2 = dx*dx;
     float dy = 0.01f; float dy2 = dy*dy;
 
-    float dt = dx2 * dy2 / (2.0 * a * (dx2 + dy2));
+    unsigned int y, x;
 
-    for (unsigned int y = 1; y < N-1; ++y) {
-        for (unsigned int x = 1; x < N-1; ++x) {
+    float dt = dx2 * dy2 / (2.0 * a * (dx2 + dy2));
+    #pragma omp parallel for collapse(2) schedule (guided) private  (x, y)
+    for (y = 1; y < N-1; ++y) {
+        for (x = 1; x < N-1; ++x) {
             next[y*N+x] = current[y*N+x] + a * dt *
 				((current[y*N+x+1]   - 2.0*current[y*N+x] + current[y*N+x-1])/dx2 +
 				 (current[(y+1)*N+x] - 2.0*current[y*N+x] + current[(y-1)*N+x])/dy2);
         }
     }
+
     next[source_y*N+source_x] = SOURCE_TEMP;
 }
 
 
 static float diff(const float *restrict current, const float *restrict next) {
     float maxdiff = 0.0f;
-#pragma omp parallel for collapse(2)
+    //#pragma omp parallel for collapse(2) 
+    //#pragma omp barrier
+    #pragma omp parallel for collapse (2) reduction (max:maxdiff) schedule(guided)
     for (unsigned int y = 1; y < N-1; ++y) {
         for (unsigned int x = 1; x < N-1; ++x) {
             maxdiff = fmaxf(maxdiff, fabsf(next[y*N+x] - current[y*N+x]));

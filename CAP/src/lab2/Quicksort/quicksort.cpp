@@ -44,12 +44,16 @@ int pivot(int* array, int first, int last){
 	return p;
 }
 
+// Las tareas en OpenMP son bloques de código que el compilador envuelve y pone a disposición para ejecutarse en paralelo.
 void quickSort(int arr[], int low, int high){
 	if(low < high){
 		int pivot = arr[high];
 		int pos = partition(arr, low, high, pivot);
-		
+
+		#pragma omp task shared(arr)
 		quickSort(arr, low, pos-1);
+
+		#pragma omp task shared(arr)
 		quickSort(arr, pos+1, high);
 	}
 }
