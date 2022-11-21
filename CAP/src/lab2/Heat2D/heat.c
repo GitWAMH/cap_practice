@@ -24,6 +24,7 @@ static const unsigned int MAX_ITERATIONS = 2000;
 
 static void init(unsigned int source_x, unsigned int source_y, float * matrix) {
     // init
+    #pragma omp parallel for collapse(2)
     for (unsigned int y = 0; y < N; ++y)
         for (unsigned int x = 0; x < N; ++x)
             matrix[y*N+x]=ENVIROM_TEMP;
@@ -84,6 +85,7 @@ void write_png(float * current, int iter) {
     uint8_t * image = malloc(3 * N * N * sizeof(uint8_t));
     float maxval = fmaxf(SOURCE_TEMP, BOUNDARY_TEMP);
 
+    #pragma omp parallel for collapse(2)
     for (unsigned int y = 0; y < N; ++y) {
         for (unsigned int x = 0; x < N; ++x) {
             unsigned int i = y*N+x;
