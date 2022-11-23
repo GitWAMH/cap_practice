@@ -81,6 +81,7 @@ int main(int argc, char *argv[]){
 	arr = new int[n];
 	init(arr, n);
 
+	#pragma omp single
 	t1=omp_get_wtime();
 	quickSort(arr, 0 , n-1);
 	t2=omp_get_wtime()-t1;

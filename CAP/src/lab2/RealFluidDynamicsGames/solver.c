@@ -46,6 +46,29 @@ static void lin_solve(unsigned int n, boundary b, float * x, const float * x0, f
         }
         set_bnd(n, b, x);
     }
+    /*for (unsigned int k = 0; k < 20; k++) {
+        for (unsigned int i = 1; i <= n; i++) {
+            for (unsigned int j = 1; j <= n; j+=2) {
+                x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
+                                                x[IX(i + 1, j)] +
+                                                x[IX(i, j - 1)] +
+                                                x[IX(i, j + 1)])) / c;
+            }
+        }
+        set_bnd(n, b, x);
+    }
+
+    for (unsigned int k = 0; k < 20; k++) {
+        for (unsigned int i = 1; i <= n; i++) {
+            for (unsigned int j = 2; j <= n; j+=2) {
+                x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
+                                                x[IX(i + 1, j)] +
+                                                x[IX(i, j - 1)] +
+                                                x[IX(i, j + 1)])) / c;
+            }
+        }
+        set_bnd(n, b, x);
+    }*/
 }
 
 static void diffuse(unsigned int n, boundary b, float * x, const float * x0, float diff, float dt)
@@ -61,10 +84,12 @@ static void advect(unsigned int n, boundary b, float * d, const float * d0, cons
 
     float dt0 = dt * n;
 
-
+    //#pragma omp parallel for collapse(2)
+    #pragma ivdep
+    #pragma vector aligned
     for (unsigned int j = 1; j <= n; j++) {
 
-    for (unsigned int i = 1; i <= n; i++) {
+        for (unsigned int i = 1; i <= n; i++) {
             x = i - dt0 * u[IX(i, j)];
             y = j - dt0 * v[IX(i, j)];
             if (x < 0.5f) {
@@ -86,7 +111,7 @@ static void advect(unsigned int n, boundary b, float * d, const float * d0, cons
             t1 = y - j0;
             t0 = 1 - t1;
             d[IX(i, j)] = s0 * (t0 * d0[IX(i0, j0)] + t1 * d0[IX(i0, j1)]) +
-                          s1 * (t0 * d0[IX(i1, j0)] + t1 * d0[IX(i1, j1)]);
+                        s1 * (t0 * d0[IX(i1, j0)] + t1 * d0[IX(i1, j1)]);
         }
     }
     set_bnd(n, b, d);
@@ -95,11 +120,13 @@ static void advect(unsigned int n, boundary b, float * d, const float * d0, cons
 static void project(unsigned int n, float *u, float *v, float *p, float *div)
 {
 
-        for (unsigned int j = 1; j <= n; j++) {
-    for (unsigned int i = 1; i <= n; i++) {
-            div[IX(i, j)] = -0.5f * (u[IX(i + 1, j)] - u[IX(i - 1, j)] +
-                                     v[IX(i, j + 1)] - v[IX(i, j - 1)]) / n;
-            p[IX(i, j)] = 0;
+    #pragma ivdep
+    #pragma vector aligned
+    for (unsigned int j = 1; j <= n; j++) {
+        for (unsigned int i = 1; i <= n; i++) {
+                div[IX(i, j)] = -0.5f * (u[IX(i + 1, j)] - u[IX(i - 1, j)] +
+                                        v[IX(i, j + 1)] - v[IX(i, j - 1)]) / n;
+                p[IX(i, j)] = 0;
         }
     }
     set_bnd(n, NONE, div);
@@ -107,11 +134,12 @@ static void project(unsigned int n, float *u, float *v, float *p, float *div)
 
     lin_solve(n, NONE, p, div, 1, 4);
 
-
-        for (unsigned int j = 1; j <= n; j++) {
-    for (unsigned int i = 1; i <= n; i++) {
-            u[IX(i, j)] -= 0.5f * n * (p[IX(i + 1, j)] - p[IX(i - 1, j)]);
-            v[IX(i, j)] -= 0.5f * n * (p[IX(i, j + 1)] - p[IX(i, j - 1)]);
+    #pragma ivdep
+    #pragma vector aligned 
+    for (unsigned int j = 1; j <= n; j++) {
+        for (unsigned int i = 1; i <= n; i++) {
+                u[IX(i, j)] -= 0.5f * n * (p[IX(i + 1, j)] - p[IX(i - 1, j)]);
+                v[IX(i, j)] -= 0.5f * n * (p[IX(i, j + 1)] - p[IX(i, j - 1)]);
         }
     }
     set_bnd(n, VERTICAL, u);
