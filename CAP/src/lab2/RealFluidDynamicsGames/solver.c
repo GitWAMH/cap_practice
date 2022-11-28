@@ -18,7 +18,6 @@ static void add_source(unsigned int n, float * x, const float * s, float dt)
 
 static void set_bnd(unsigned int n, boundary b, float * x)
 {
-
     for (unsigned int i = 1; i <= n; i++) {
         x[IX(0, i)]     = b == VERTICAL ? -x[IX(1, i)] : x[IX(1, i)];
         x[IX(n + 1, i)] = b == VERTICAL ? -x[IX(n, i)] : x[IX(n, i)];
@@ -34,19 +33,11 @@ static void set_bnd(unsigned int n, boundary b, float * x)
 static void lin_solve(unsigned int n, boundary b, float * x, const float * x0, float a, float c)
 {
 
-
     for (unsigned int k = 0; k < 20; k++) {
-        for (unsigned int i = 1; i <= n; i++) {
-            for (unsigned int j = 1; j <= n; j++) {
-                x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
-                                                x[IX(i + 1, j)] +
-                                                x[IX(i, j - 1)] +
-                                                x[IX(i, j + 1)])) / c;
-            }
-        }
-        set_bnd(n, b, x);
-    }
-    /*for (unsigned int k = 0; k < 20; k++) {
+
+        #pragma omp parallel for collapse (2)
+        #pragma ivdep
+        #pragma vector aligned
         for (unsigned int i = 1; i <= n; i++) {
             for (unsigned int j = 1; j <= n; j+=2) {
                 x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
@@ -56,9 +47,10 @@ static void lin_solve(unsigned int n, boundary b, float * x, const float * x0, f
             }
         }
         set_bnd(n, b, x);
-    }
 
-    for (unsigned int k = 0; k < 20; k++) {
+        #pragma omp parallel for collapse (2)
+        #pragma ivdep
+        #pragma vector aligned
         for (unsigned int i = 1; i <= n; i++) {
             for (unsigned int j = 2; j <= n; j+=2) {
                 x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
@@ -68,7 +60,8 @@ static void lin_solve(unsigned int n, boundary b, float * x, const float * x0, f
             }
         }
         set_bnd(n, b, x);
-    }*/
+    }
+
 }
 
 static void diffuse(unsigned int n, boundary b, float * x, const float * x0, float diff, float dt)
@@ -84,7 +77,7 @@ static void advect(unsigned int n, boundary b, float * d, const float * d0, cons
 
     float dt0 = dt * n;
 
-    //#pragma omp parallel for collapse(2)
+    #pragma omp parallel for collapse(2)
     #pragma ivdep
     #pragma vector aligned
     for (unsigned int j = 1; j <= n; j++) {
@@ -119,7 +112,7 @@ static void advect(unsigned int n, boundary b, float * d, const float * d0, cons
 
 static void project(unsigned int n, float *u, float *v, float *p, float *div)
 {
-
+    #pragma omp parallel for collapse (2) 
     #pragma ivdep
     #pragma vector aligned
     for (unsigned int j = 1; j <= n; j++) {
@@ -134,6 +127,7 @@ static void project(unsigned int n, float *u, float *v, float *p, float *div)
 
     lin_solve(n, NONE, p, div, 1, 4);
 
+    #pragma omp parallel for collapse (2)
     #pragma ivdep
     #pragma vector aligned 
     for (unsigned int j = 1; j <= n; j++) {

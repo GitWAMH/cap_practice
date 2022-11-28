@@ -1,0 +1,105 @@
+--- !Missed
+Pass:            inline
+Name:            NoDefinition
+DebugLoc:        { File: timing.c, Line: 12, Column: 3 }
+Function:        wtime
+Args:
+  - Callee:          gettimeofday
+  - String:          ' will not be inlined into '
+  - Caller:          wtime
+    DebugLoc:        { File: timing.c, Line: 10, Column: 0 }
+  - String:          ' because its definition is unavailable'
+...
+--- !Missed
+Pass:            inline
+Name:            NoDefinition
+DebugLoc:        { File: timing.c, Line: 12, Column: 3 }
+Function:        wtime
+Args:
+  - Callee:          gettimeofday
+  - String:          ' will not be inlined into '
+  - Caller:          wtime
+    DebugLoc:        { File: timing.c, Line: 10, Column: 0 }
+  - String:          ' because its definition is unavailable'
+...
+--- !Missed
+Pass:            gvn
+Name:            LoadClobbered
+DebugLoc:        { File: timing.c, Line: 14, Column: 22 }
+Function:        wtime
+Args:
+  - String:          'load of type '
+  - Type:            ''
+  - String:          ' not eliminated'
+  - String:          ' because it is clobbered by '
+  - ClobberedBy:     call
+    DebugLoc:        { File: timing.c, Line: 12, Column: 3 }
+...
+--- !Missed
+Pass:            gvn
+Name:            LoadClobbered
+DebugLoc:        { File: timing.c, Line: 14, Column: 41 }
+Function:        wtime
+Args:
+  - String:          'load of type '
+  - Type:            ''
+  - String:          ' not eliminated'
+  - String:          ' because it is clobbered by '
+  - ClobberedBy:     call
+    DebugLoc:        { File: timing.c, Line: 12, Column: 3 }
+...
+--- !Missed
+Pass:            inline
+Name:            NoDefinition
+DebugLoc:        { File: timing.c, Line: 12, Column: 3 }
+Function:        wtime
+Args:
+  - Callee:          gettimeofday
+  - String:          ' will not be inlined into '
+  - Caller:          wtime
+    DebugLoc:        { File: timing.c, Line: 10, Column: 0 }
+  - String:          ' because its definition is unavailable'
+...
+--- !Missed
+Pass:            inline
+Name:            NoDefinition
+DebugLoc:        { File: timing.c, Line: 12, Column: 3 }
+Function:        wtime
+Args:
+  - Callee:          gettimeofday
+  - String:          ' will not be inlined into '
+  - Caller:          wtime
+    DebugLoc:        { File: timing.c, Line: 10, Column: 0 }
+  - String:          ' because its definition is unavailable'
+...
+--- !Analysis
+Pass:            prologepilog
+Name:            StackSize
+DebugLoc:        { File: timing.c, Line: 10, Column: 0 }
+Function:        wtime
+Args:
+  - NumStackBytes:   '24'
+  - String:          ' stack bytes in function'
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        wtime
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ''
+  - String:          ': '
+  - INST_:           '10'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionCount
+DebugLoc:        { File: timing.c, Line: 10, Column: 0 }
+Function:        wtime
+Args:
+  - NumInstructions: '10'
+  - String:          ' instructions in function'
+...
