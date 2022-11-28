@@ -1,0 +1,366 @@
+Libomptarget --> Init target library!
+Libomptarget --> Initialized OMPT
+Libomptarget --> Loading RTLs...
+Libomptarget --> Loading library 'libomptarget.rtl.level0.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.level0.so': libze_loader.so.1: cannot open shared object file: No such file or directory!
+Libomptarget --> Loading library 'libomptarget.rtl.opencl.so'...
+Target OPENCL RTL --> Init OpenCL plugin!
+Target OPENCL RTL --> omp_get_thread_limit() returned 2147483647
+Target OPENCL RTL --> omp_get_max_teams() returned 0
+Target OPENCL RTL --> Target device type is set to GPU
+Libomptarget --> Successfully loaded library 'libomptarget.rtl.opencl.so'!
+Target OPENCL RTL --> Start initializing OpenCL
+Target OPENCL RTL --> Platform OpenCL 3.0  has 1 Devices
+Target OPENCL RTL --> Extension clGetMemAllocInfoINTEL is found.
+Target OPENCL RTL --> Extension clHostMemAllocINTEL is found.
+Target OPENCL RTL --> Extension clDeviceMemAllocINTEL is found.
+Target OPENCL RTL --> Extension clSharedMemAllocINTEL is found.
+Target OPENCL RTL --> Extension clMemFreeINTEL is found.
+Target OPENCL RTL --> Extension clSetKernelArgMemPointerINTEL is found.
+Target OPENCL RTL --> Extension clEnqueueMemcpyINTEL is found.
+Target OPENCL RTL --> Extension clSetProgramSpecializationConstant is found.
+Target OPENCL RTL --> Extension clGetDeviceGlobalVariablePointerINTEL is found.
+Target OPENCL RTL --> Extension clGetKernelSuggestedLocalWorkSizeINTEL is found.
+Target OPENCL RTL --> Warning: Extension clGitsIndirectAllocationOffsets is not found.
+Target OPENCL RTL --> Device 0: Intel(R) UHD Graphics 620 [0x5917]
+Target OPENCL RTL --> Number of execution units on the device is 24
+Target OPENCL RTL --> Maximum work group size for the device is 256
+Target OPENCL RTL --> Maximum memory allocation size is 4294959104
+Target OPENCL RTL --> Device local mem size: 65536
+Libomptarget --> Registering RTL libomptarget.rtl.opencl.so supporting 1 devices!
+Libomptarget --> Optional interface: __tgt_rtl_data_alloc_base
+Libomptarget --> Optional interface: __tgt_rtl_data_alloc_managed
+Libomptarget --> Optional interface: __tgt_rtl_data_realloc
+Libomptarget --> Optional interface: __tgt_rtl_data_aligned_alloc
+Libomptarget --> Optional interface: __tgt_rtl_get_device_name
+Libomptarget --> Optional interface: __tgt_rtl_get_context_handle
+Libomptarget --> Optional interface: __tgt_rtl_get_data_alloc_info
+Libomptarget --> Optional interface: __tgt_rtl_init_ompt
+Libomptarget --> Optional interface: __tgt_rtl_requires_mapping
+Libomptarget --> Optional interface: __tgt_rtl_manifest_data_for_region
+Libomptarget --> Optional interface: __tgt_rtl_add_build_options
+Libomptarget --> Optional interface: __tgt_rtl_is_supported_device
+Libomptarget --> Optional interface: __tgt_rtl_deinit
+Libomptarget --> Optional interface: __tgt_rtl_create_interop
+Libomptarget --> Optional interface: __tgt_rtl_release_interop
+Libomptarget --> Optional interface: __tgt_rtl_use_interop
+Libomptarget --> Optional interface: __tgt_rtl_get_num_interop_properties
+Libomptarget --> Optional interface: __tgt_rtl_get_interop_property_value
+Libomptarget --> Optional interface: __tgt_rtl_get_interop_property_info
+Libomptarget --> Optional interface: __tgt_rtl_get_interop_rc_desc
+Libomptarget --> Optional interface: __tgt_rtl_is_accessible_addr_range
+Libomptarget --> Optional interface: __tgt_rtl_notify_indirect_access
+Libomptarget --> Optional interface: __tgt_rtl_is_private_arg_on_host
+Libomptarget --> Optional interface: __tgt_rtl_alloc_per_hw_thread_scratch
+Libomptarget --> Optional interface: __tgt_rtl_free_per_hw_thread_scratch
+Libomptarget --> Optional interface: __tgt_rtl_run_target_team_nd_region
+Target OPENCL RTL --> Initialized OMPT
+Libomptarget --> Loading library 'libomptarget.rtl.ppc64.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.ppc64.so': libomptarget.rtl.ppc64.so: cannot open shared object file: No such file or directory!
+Libomptarget --> Loading library 'libomptarget.rtl.x86_64.so'...
+Libomptarget --> Successfully loaded library 'libomptarget.rtl.x86_64.so'!
+Libomptarget --> Registering RTL libomptarget.rtl.x86_64.so supporting 4 devices!
+Libomptarget --> Optional interface: __tgt_rtl_requires_mapping
+Libomptarget --> Loading library 'libomptarget.rtl.cuda.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.cuda.so': libomptarget.rtl.cuda.so: cannot open shared object file: No such file or directory!
+Libomptarget --> Loading library 'libomptarget.rtl.aarch64.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.aarch64.so': libomptarget.rtl.aarch64.so: cannot open shared object file: No such file or directory!
+Libomptarget --> Loading library 'libomptarget.rtl.ve.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.ve.so': libomptarget.rtl.ve.so: cannot open shared object file: No such file or directory!
+Libomptarget --> Loading library 'libomptarget.rtl.amdgpu.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.amdgpu.so': libomptarget.rtl.amdgpu.so: cannot open shared object file: No such file or directory!
+Libomptarget --> Loading library 'libomptarget.rtl.rpc.so'...
+Libomptarget --> Unable to load library 'libomptarget.rtl.rpc.so': libomptarget.rtl.rpc.so: cannot open shared object file: No such file or directory!
+Libomptarget --> RTLs loaded!
+Target OPENCL RTL --> Target binary is a valid oneAPI OpenMP image.
+Libomptarget --> Image 0x0000000000401e60 is compatible with RTL libomptarget.rtl.opencl.so!
+Libomptarget --> RTL 0x00000000015723f0 has index 0!
+Libomptarget --> Registering image 0x0000000000401e60 with RTL libomptarget.rtl.opencl.so!
+Libomptarget --> Done registering entries!
+Libomptarget --> Entering target region with entry point 0x0000000000401ba0 and device Id 0
+Libomptarget --> Call to omp_get_num_devices returning 1
+Libomptarget --> Call to omp_get_num_devices returning 1
+Libomptarget --> Call to omp_get_initial_device returning 1
+Libomptarget --> Checking whether device 0 is ready.
+Libomptarget --> Is the device 0 (local ID 0) initialized? 0
+Target OPENCL RTL --> Initialize requires flags to 1
+Target OPENCL RTL --> Initialize OpenCL device
+Target OPENCL RTL --> Getting extensions for device 0
+Target OPENCL RTL --> Device extensions: cl_khr_byte_addressable_store cl_khr_fp16 cl_khr_global_int32_base_atomics cl_khr_global_int32_extended_atomics cl_khr_icd cl_khr_local_int32_base_atomics cl_khr_local_int32_extended_atomics cl_intel_command_queue_families cl_intel_subgroups cl_intel_required_subgroup_size cl_intel_subgroups_short cl_khr_spir cl_intel_accelerator cl_intel_driver_diagnostics cl_khr_priority_hints cl_khr_throttle_hints cl_khr_create_command_queue cl_intel_subgroups_char cl_intel_subgroups_long cl_khr_il_program cl_intel_mem_force_host_memory cl_khr_subgroup_extended_types cl_khr_subgroup_non_uniform_vote cl_khr_subgroup_ballot cl_khr_subgroup_non_uniform_arithmetic cl_khr_subgroup_shuffle cl_khr_subgroup_shuffle_relative cl_khr_subgroup_clustered_reduce cl_intel_device_attribute_query cl_khr_fp64 cl_khr_subgroups cl_intel_spirv_device_side_avc_motion_estimation cl_intel_spirv_media_block_io cl_intel_spirv_subgroups cl_khr_spirv_no_integer_wrap_decoration cl_intel_unified_shared_memory_preview cl_khr_mipmap_image cl_khr_mipmap_image_writes cl_intel_planar_yuv cl_intel_packed_yuv cl_intel_motion_estimation cl_intel_device_side_avc_motion_estimation cl_intel_advanced_motion_estimation cl_khr_int64_base_atomics cl_khr_int64_extended_atomics cl_khr_image2d_from_buffer cl_khr_depth_images cl_khr_3d_image_writes cl_intel_media_block_io cl_intel_va_api_media_sharing cl_intel_sharing_format_query cl_khr_pci_bus_info 
+Target OPENCL RTL --> Extension UnifiedSharedMemory enabled.
+Target OPENCL RTL --> Extension DeviceAttributeQuery enabled.
+Target OPENCL RTL --> Extension clGetDeviceGlobalVariablePointerINTEL enabled.
+Target OPENCL RTL --> Extension clGetKernelSuggestedLocalWorkSizeINTEL enabled.
+Libomptarget --> Device 0 is ready to use.
+Target OPENCL RTL --> Device 0: Loading binary from 0x0000000000401e60
+Target OPENCL RTL --> Expecting to have 3 entries defined
+Target OPENCL RTL --> Base OpenCL compilation options: -cl-std=CL2.0  
+Target OPENCL RTL --> Base OpenCL linking options: 
+Target OPENCL RTL --> Created offload program from image #0.
+Target OPENCL RTL --> Successfully linked 1 programs.
+Target OPENCL RTL --> Looking up device global variable '__omp_offloading_entries_table_size' of size 8 bytes on device 0.
+Target OPENCL RTL --> Global variable lookup succeeded (size: 8 bytes).
+Target OPENCL RTL --> Looking up device global variable '__omp_offloading_entries_table' of size 120 bytes on device 0.
+Target OPENCL RTL --> Global variable lookup succeeded (size: 120 bytes).
+Target OPENCL RTL --> Device offload table loaded:
+Target OPENCL RTL --> 	0:	__omp_offloading_10303_4e1c07__Z4main_l33
+Target OPENCL RTL --> 	1:	__omp_offloading_10303_4e1c07__Z4main_l47
+Target OPENCL RTL --> 	2:	__omp_offloading_10303_4e1c07__Z4main_l71
+Target OPENCL RTL --> Looking up device global variable '__omp_offloading_10303_4e1c07__Z4main_l33_kernel_info' of unknown size on device 0.
+Target OPENCL RTL --> Global variable lookup succeeded (size: 32 bytes).
+Target OPENCL RTL --> Kernel 0: Name = __omp_offloading_10303_4e1c07__Z4main_l33, NumArgs = 0
+Target OPENCL RTL --> Looking up device global variable '__omp_offloading_10303_4e1c07__Z4main_l47_kernel_info' of unknown size on device 0.
+Target OPENCL RTL --> Global variable lookup succeeded (size: 136 bytes).
+Target OPENCL RTL --> Kernel 1: Name = __omp_offloading_10303_4e1c07__Z4main_l47, NumArgs = 13
+Target OPENCL RTL -->   Arg  0: array* 
+Target OPENCL RTL -->   Arg  1: array* 
+Target OPENCL RTL -->   Arg  2: array* 
+Target OPENCL RTL -->   Arg  3: long 
+Target OPENCL RTL -->   Arg  4: long 
+Target OPENCL RTL -->   Arg  5: long 
+Target OPENCL RTL -->   Arg  6: long 
+Target OPENCL RTL -->   Arg  7: long 
+Target OPENCL RTL -->   Arg  8: long 
+Target OPENCL RTL -->   Arg  9: long 
+Target OPENCL RTL -->   Arg 10: long 
+Target OPENCL RTL -->   Arg 11: long 
+Target OPENCL RTL -->   Arg 12: long 
+Target OPENCL RTL --> Looking up device global variable '__omp_offloading_10303_4e1c07__Z4main_l71_kernel_info' of unknown size on device 0.
+Target OPENCL RTL --> Global variable lookup succeeded (size: 136 bytes).
+Target OPENCL RTL --> Kernel 2: Name = __omp_offloading_10303_4e1c07__Z4main_l71, NumArgs = 13
+Target OPENCL RTL -->   Arg  0: array* 
+Target OPENCL RTL -->   Arg  1: array* 
+Target OPENCL RTL -->   Arg  2: array* 
+Target OPENCL RTL -->   Arg  3: long 
+Target OPENCL RTL -->   Arg  4: long 
+Target OPENCL RTL -->   Arg  5: long 
+Target OPENCL RTL -->   Arg  6: long 
+Target OPENCL RTL -->   Arg  7: long 
+Target OPENCL RTL -->   Arg  8: long 
+Target OPENCL RTL -->   Arg  9: long 
+Target OPENCL RTL -->   Arg 10: long 
+Target OPENCL RTL -->   Arg 11: long 
+Target OPENCL RTL -->   Arg 12: long 
+Target OPENCL RTL --> Looking up device global variable '__omp_spirv_program_data' of size 56 bytes on device 0.
+Target OPENCL RTL --> Global variable lookup succeeded (size: 56 bytes).
+Libomptarget --> Launching target execution __omp_offloading_10303_4e1c07__Z4main_l33 with pointer 0x00000000017ab1a0 (index=0).
+Libomptarget --> Manifesting used target pointers:
+Target OPENCL RTL --> Assumed kernel SIMD width is 32
+Target OPENCL RTL --> Preferred group size is multiple of 32
+Target OPENCL RTL --> Max group count is set to 1 (num_teams clause or no teams construct)
+Target OPENCL RTL --> Team sizes = {32, 1, 1}
+Target OPENCL RTL --> Number of teams = {1, 1, 1}
+Target OPENCL RTL --> Started executing kernel.
+Target OPENCL RTL --> Successfully finished kernel execution.
+Libomptarget --> Entering target region with entry point 0x0000000000401ba1 and device Id 0
+Libomptarget --> Call to omp_get_num_devices returning 1
+Libomptarget --> Call to omp_get_num_devices returning 1
+Libomptarget --> Call to omp_get_initial_device returning 1
+Libomptarget --> Checking whether device 0 is ready.
+Libomptarget --> Is the device 0 (local ID 0) initialized? 1
+Libomptarget --> Device 0 is ready to use.
+Libomptarget --> Entry  0: Base=0x00007ffcc6d972a0, Begin=0x00007ffcc6d972a0, Size=512, Type=0x21, Name=unknown
+Libomptarget --> Entry  1: Base=0x00007ffcc6d932a0, Begin=0x00007ffcc6d932a0, Size=16384, Type=0x21, Name=unknown
+Libomptarget --> Entry  2: Base=0x00007ffcc6d8f2a0, Begin=0x00007ffcc6d8f2a0, Size=16384, Type=0x22, Name=unknown
+Libomptarget --> Entry  3: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  4: Base=0x0000000000000003, Begin=0x0000000000000003, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  5: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  6: Base=0x0000000000000007, Begin=0x0000000000000007, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  7: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  8: Base=0x0000000000000007, Begin=0x0000000000000007, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  9: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 10: Base=0x0000000000000007, Begin=0x0000000000000007, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 11: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 12: Base=0x00000000000007ff, Begin=0x00000000000007ff, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 13: Base=0x00007ffcc6d8f280, Begin=0x00007ffcc6d8f280, Size=32, Type=0x800, Name=unknown
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Target OPENCL RTL --> Ptr 0x00007ffcc6d972a0 requires mapping.
+Target OPENCL RTL --> Created base buffer 0xffffd556aa7e0000 during data alloc
+Libomptarget --> Creating new map entry with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, DynRefCount=1, HoldRefCount=0, Name=unknown
+Libomptarget --> Moving 512 bytes (hst:0x00007ffcc6d972a0) -> (tgt:0xffffd556aa7e0000)
+Libomptarget --> There are 512 bytes allocated at target address 0xffffd556aa7e0000 - is new
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Target OPENCL RTL --> Ptr 0x00007ffcc6d932a0 requires mapping.
+Target OPENCL RTL --> Created base buffer 0xffffd556aa7d0000 during data alloc
+Libomptarget --> Creating new map entry with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, DynRefCount=1, HoldRefCount=0, Name=unknown
+Libomptarget --> Moving 16384 bytes (hst:0x00007ffcc6d932a0) -> (tgt:0xffffd556aa7d0000)
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7d0000 - is new
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Target OPENCL RTL --> Ptr 0x00007ffcc6d8f2a0 requires mapping.
+Target OPENCL RTL --> Created base buffer 0xffffd556aa7c0000 during data alloc
+Libomptarget --> Creating new map entry with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, DynRefCount=1, HoldRefCount=0, Name=unknown
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7c0000 - is new
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, DynRefCount=1 (update suppressed), HoldRefCount=0
+Libomptarget --> Obtained target argument (Begin: 0xffffd556aa7e0000, Offset: 0) from host pointer 0x00007ffcc6d972a0
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, DynRefCount=1 (update suppressed), HoldRefCount=0
+Libomptarget --> Obtained target argument (Begin: 0xffffd556aa7d0000, Offset: 0) from host pointer 0x00007ffcc6d932a0
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, DynRefCount=1 (update suppressed), HoldRefCount=0
+Libomptarget --> Obtained target argument (Begin: 0xffffd556aa7c0000, Offset: 0) from host pointer 0x00007ffcc6d8f2a0
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000003 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000007 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000007 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000007 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x00000000000007ff to the target construct
+Libomptarget --> Launching target execution __omp_offloading_10303_4e1c07__Z4main_l47 with pointer 0x00000000017ab1a8 (index=1).
+Libomptarget --> Manifesting used target pointers:
+Target OPENCL RTL --> Assumed kernel SIMD width is 16
+Target OPENCL RTL --> Preferred group size is multiple of 16
+Target OPENCL RTL --> Loop 0: lower bound = 0, upper bound = 2047, Stride = 1
+Target OPENCL RTL --> Team sizes = {16, 1, 1}
+Target OPENCL RTL --> Number of teams = {128, 1, 1}
+Target OPENCL RTL --> Kernel Pointer Arg 0 set successfully
+Target OPENCL RTL --> Kernel Pointer Arg 1 set successfully
+Target OPENCL RTL --> Kernel Pointer Arg 2 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 3 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 4 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 5 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 6 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 7 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 8 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 9 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 10 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 11 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 12 set successfully
+Target OPENCL RTL --> Started executing kernel.
+Target OPENCL RTL --> Successfully finished kernel execution.
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, DynRefCount=0 (decremented, delayed deletion), HoldRefCount=0
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7c0000 - is last
+Libomptarget --> Moving 16384 bytes (tgt:0xffffd556aa7c0000) -> (hst:0x00007ffcc6d8f2a0)
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, DynRefCount=0 (decremented, delayed deletion), HoldRefCount=0
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7d0000 - is last
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, DynRefCount=0 (decremented, delayed deletion), HoldRefCount=0
+Libomptarget --> There are 512 bytes allocated at target address 0xffffd556aa7e0000 - is last
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Libomptarget --> Deleting tgt data 0xffffd556aa7c0000 of size 16384
+Libomptarget --> Removing map entry with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, Name=unknown
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Libomptarget --> Deleting tgt data 0xffffd556aa7d0000 of size 16384
+Libomptarget --> Removing map entry with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, Name=unknown
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Libomptarget --> Deleting tgt data 0xffffd556aa7e0000 of size 512
+Libomptarget --> Removing map entry with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, Name=unknown
+Libomptarget --> Entering target region with entry point 0x0000000000401c20 and device Id 0
+Libomptarget --> Call to omp_get_num_devices returning 1
+Libomptarget --> Call to omp_get_num_devices returning 1
+Libomptarget --> Call to omp_get_initial_device returning 1
+Libomptarget --> Checking whether device 0 is ready.
+Libomptarget --> Is the device 0 (local ID 0) initialized? 1
+Libomptarget --> Device 0 is ready to use.
+Libomptarget --> Entry  0: Base=0x00007ffcc6d972a0, Begin=0x00007ffcc6d972a0, Size=512, Type=0x21, Name=unknown
+Libomptarget --> Entry  1: Base=0x00007ffcc6d932a0, Begin=0x00007ffcc6d932a0, Size=16384, Type=0x21, Name=unknown
+Libomptarget --> Entry  2: Base=0x00007ffcc6d8f2a0, Begin=0x00007ffcc6d8f2a0, Size=16384, Type=0x23, Name=unknown
+Libomptarget --> Entry  3: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  4: Base=0x0000000000000003, Begin=0x0000000000000003, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  5: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  6: Base=0x0000000000000007, Begin=0x0000000000000007, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  7: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  8: Base=0x0000000000000007, Begin=0x0000000000000007, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry  9: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 10: Base=0x0000000000000007, Begin=0x0000000000000007, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 11: Base=0x0000000000000000, Begin=0x0000000000000000, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 12: Base=0x00000000000007ff, Begin=0x00000000000007ff, Size=0, Type=0x120, Name=unknown
+Libomptarget --> Entry 13: Base=0x00007ffcc6d8f260, Begin=0x00007ffcc6d8f260, Size=32, Type=0x800, Name=unknown
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Target OPENCL RTL --> Ptr 0x00007ffcc6d972a0 requires mapping.
+Target OPENCL RTL --> Created base buffer 0xffffd556aa7e0000 during data alloc
+Libomptarget --> Creating new map entry with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, DynRefCount=1, HoldRefCount=0, Name=unknown
+Libomptarget --> Moving 512 bytes (hst:0x00007ffcc6d972a0) -> (tgt:0xffffd556aa7e0000)
+Libomptarget --> There are 512 bytes allocated at target address 0xffffd556aa7e0000 - is new
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Target OPENCL RTL --> Ptr 0x00007ffcc6d932a0 requires mapping.
+Target OPENCL RTL --> Created base buffer 0xffffd556aa7d0000 during data alloc
+Libomptarget --> Creating new map entry with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, DynRefCount=1, HoldRefCount=0, Name=unknown
+Libomptarget --> Moving 16384 bytes (hst:0x00007ffcc6d932a0) -> (tgt:0xffffd556aa7d0000)
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7d0000 - is new
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Target OPENCL RTL --> Ptr 0x00007ffcc6d8f2a0 requires mapping.
+Target OPENCL RTL --> Created base buffer 0xffffd556aa7c0000 during data alloc
+Libomptarget --> Creating new map entry with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, DynRefCount=1, HoldRefCount=0, Name=unknown
+Libomptarget --> Moving 16384 bytes (hst:0x00007ffcc6d8f2a0) -> (tgt:0xffffd556aa7c0000)
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7c0000 - is new
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, DynRefCount=1 (update suppressed), HoldRefCount=0
+Libomptarget --> Obtained target argument (Begin: 0xffffd556aa7e0000, Offset: 0) from host pointer 0x00007ffcc6d972a0
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, DynRefCount=1 (update suppressed), HoldRefCount=0
+Libomptarget --> Obtained target argument (Begin: 0xffffd556aa7d0000, Offset: 0) from host pointer 0x00007ffcc6d932a0
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, DynRefCount=1 (update suppressed), HoldRefCount=0
+Libomptarget --> Obtained target argument (Begin: 0xffffd556aa7c0000, Offset: 0) from host pointer 0x00007ffcc6d8f2a0
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000003 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000007 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000007 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000007 to the target construct
+Libomptarget --> Forwarding first-private value 0x0000000000000000 to the target construct
+Libomptarget --> Forwarding first-private value 0x00000000000007ff to the target construct
+Libomptarget --> Launching target execution __omp_offloading_10303_4e1c07__Z4main_l71 with pointer 0x00000000017ab1b0 (index=2).
+Libomptarget --> Manifesting used target pointers:
+Target OPENCL RTL --> Assumed kernel SIMD width is 16
+Target OPENCL RTL --> Preferred group size is multiple of 16
+Target OPENCL RTL --> Loop 0: lower bound = 0, upper bound = 2047, Stride = 1
+Target OPENCL RTL --> Team sizes = {16, 1, 1}
+Target OPENCL RTL --> Number of teams = {128, 1, 1}
+Target OPENCL RTL --> Kernel Pointer Arg 0 set successfully
+Target OPENCL RTL --> Kernel Pointer Arg 1 set successfully
+Target OPENCL RTL --> Kernel Pointer Arg 2 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 3 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 4 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 5 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 6 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 7 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 8 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 9 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 10 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 11 set successfully
+Target OPENCL RTL --> Kernel Scalar Arg 12 set successfully
+Target OPENCL RTL --> Started executing kernel.
+Target OPENCL RTL --> Successfully finished kernel execution.
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, DynRefCount=0 (decremented, delayed deletion), HoldRefCount=0
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7c0000 - is last
+Libomptarget --> Moving 16384 bytes (tgt:0xffffd556aa7c0000) -> (hst:0x00007ffcc6d8f2a0)
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, DynRefCount=0 (decremented, delayed deletion), HoldRefCount=0
+Libomptarget --> There are 16384 bytes allocated at target address 0xffffd556aa7d0000 - is last
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Libomptarget --> Mapping exists with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, DynRefCount=0 (decremented, delayed deletion), HoldRefCount=0
+Libomptarget --> There are 512 bytes allocated at target address 0xffffd556aa7e0000 - is last
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d8f2a0, Size=16384)...
+Libomptarget --> Deleting tgt data 0xffffd556aa7c0000 of size 16384
+Libomptarget --> Removing map entry with HstPtrBegin=0x00007ffcc6d8f2a0, TgtPtrBegin=0xffffd556aa7c0000, Size=16384, Name=unknown
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d932a0, Size=16384)...
+Libomptarget --> Deleting tgt data 0xffffd556aa7d0000 of size 16384
+Libomptarget --> Removing map entry with HstPtrBegin=0x00007ffcc6d932a0, TgtPtrBegin=0xffffd556aa7d0000, Size=16384, Name=unknown
+Libomptarget --> Looking up mapping(HstPtrBegin=0x00007ffcc6d972a0, Size=512)...
+Libomptarget --> Deleting tgt data 0xffffd556aa7e0000 of size 512
+Libomptarget --> Removing map entry with HstPtrBegin=0x00007ffcc6d972a0, TgtPtrBegin=0xffffd556aa7e0000, Size=512, Name=unknown
+Target OPENCL RTL --> Closed RTL successfully
+Libomptarget --> Unloading target library!
+Target OPENCL RTL --> Target binary is a valid oneAPI OpenMP image.
+Libomptarget --> Image 0x0000000000401e60 is compatible with RTL 0x00000000015723f0!
+Libomptarget --> Unregistered image 0x0000000000401e60 from RTL 0x00000000015723f0!
+Libomptarget --> Done unregistering images!
+Libomptarget --> Removing translation table for descriptor 0x0000000000401e00
+Libomptarget --> Done unregistering library!
+Libomptarget --> Deinit target library!
+Target OPENCL RTL --> Deinit OpenCL plugin!
+Error: Could not load board library /opt/intel/inteloneapi/compiler/2021.1-beta03/linux/lib/oclfpga/board/intel_a10gx_pac/linux64/lib/libintel_opae_mmd.so (error_msg: /opt/intel/inteloneapi/compiler/2021.1-beta03/linux/lib/oclfpga/board/intel_a10gx_pac/linux64/lib/libintel_opae_mmd.so: cannot open shared object file: No such file or directory)
+Failed to dynamically load board MMD /opt/intel/inteloneapi/compiler/2021.1-beta03/linux/lib/oclfpga/board/intel_a10gx_pac/linux64/lib/libintel_opae_mmd.so
+Error: Could not load board library /opt/intel/inteloneapi/compiler/2021.1-beta03/linux/lib/oclfpga/board/intel_a10gx_pac/linux64/lib/libintel_opae_mmd.so (error_msg: /opt/intel/inteloneapi/compiler/2021.1-beta03/linux/lib/oclfpga/board/intel_a10gx_pac/linux64/lib/libintel_opae_mmd.so: cannot open shared object file: No such file or directory)
+Failed to dynamically load board MMD /opt/intel/inteloneapi/compiler/2021.1-beta03/linux/lib/oclfpga/board/intel_a10gx_pac/linux64/lib/libintel_opae_mmd.so
+target region: w[0]=28.474623 time=0.003915
