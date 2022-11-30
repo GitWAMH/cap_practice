@@ -17,7 +17,7 @@ host:
 gpu: omp_offload
 
 omp_offload:
-	$(CC) $(CFLAGS_OFFLOAD) $(NAME).c -o $(NAME).ompz $(LIB)
+	$(CC) $(CFLAGS_OFFLOAD) $(NAME).c -o $(NAME).omp.exe $(LIB)
 
 clean: 
 	rm -f __hmpp_*  *.exe

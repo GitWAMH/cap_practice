@@ -18,6 +18,9 @@ static void add_source(unsigned int n, float * x, const float * s, float dt)
 
 static void set_bnd(unsigned int n, boundary b, float * x)
 {
+    #pragma omp parallel for 
+    #pragma ivdep
+    #pragma vector aligned
     for (unsigned int i = 1; i <= n; i++) {
         x[IX(0, i)]     = b == VERTICAL ? -x[IX(1, i)] : x[IX(1, i)];
         x[IX(n + 1, i)] = b == VERTICAL ? -x[IX(n, i)] : x[IX(n, i)];
@@ -34,12 +37,12 @@ static void lin_solve(unsigned int n, boundary b, float * x, const float * x0, f
 {
 
     for (unsigned int k = 0; k < 20; k++) {
-
+        // casillas rojas
         #pragma omp parallel for collapse (2)
         #pragma ivdep
         #pragma vector aligned
         for (unsigned int i = 1; i <= n; i++) {
-            for (unsigned int j = 1; j <= n; j+=2) {
+            for (unsigned int j = (i%2 != 0 ? 1 : 2); j <= n; j+=2) {
                 x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
                                                 x[IX(i + 1, j)] +
                                                 x[IX(i, j - 1)] +
@@ -48,11 +51,12 @@ static void lin_solve(unsigned int n, boundary b, float * x, const float * x0, f
         }
         set_bnd(n, b, x);
 
+        // casillas negras
         #pragma omp parallel for collapse (2)
         #pragma ivdep
         #pragma vector aligned
         for (unsigned int i = 1; i <= n; i++) {
-            for (unsigned int j = 2; j <= n; j+=2) {
+            for (unsigned int j = (i%2 == 0 ? 1 : 2); j <= n; j+=2) {
                 x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] +
                                                 x[IX(i + 1, j)] +
                                                 x[IX(i, j - 1)] +
