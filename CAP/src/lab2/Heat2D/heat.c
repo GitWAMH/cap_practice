@@ -24,7 +24,7 @@ static const unsigned int MAX_ITERATIONS = 2000;
 
 static void init(unsigned int source_x, unsigned int source_y, float * matrix) {
     // init
-    #pragma omp parallel for collapse(2)
+    //#pragma omp parallel for collapse(2)
     for (unsigned int y = 0; y < N; ++y)
         for (unsigned int x = 0; x < N; ++x)
             matrix[y*N+x]=ENVIROM_TEMP;
@@ -50,13 +50,11 @@ static void step(unsigned int source_x, unsigned int source_y, const float *rest
     float dx = 0.01f; float dx2 = dx*dx;
     float dy = 0.01f; float dy2 = dy*dy;
 
-    unsigned int y, x;
-
     float dt = dx2 * dy2 / (2.0 * a * (dx2 + dy2));
-    #pragma omp parallel for collapse(2) schedule (guided) private  (x, y)
+    #pragma omp parallel for collapse(2) schedule (guided)
     #pragma ivdep
-    for (y = 1; y < N-1; ++y) {
-        for (x = 1; x < N-1; ++x) {
+    for (unsigned y = 1; y < N-1; ++y) {
+        for (unsigned x = 1; x < N-1; ++x) {
             next[y*N+x] = current[y*N+x] + a * dt *
 				((current[y*N+x+1]   - 2.0*current[y*N+x] + current[y*N+x-1])/dx2 +
 				 (current[(y+1)*N+x] - 2.0*current[y*N+x] + current[(y-1)*N+x])/dy2);
@@ -69,8 +67,7 @@ static void step(unsigned int source_x, unsigned int source_y, const float *rest
 
 static float diff(const float *restrict current, const float *restrict next) {
     float maxdiff = 0.0f;
-    //#pragma omp parallel for collapse(2) 
-    //#pragma omp barrier
+    
     #pragma omp parallel for collapse (2) reduction (max:maxdiff) schedule(guided)
     #pragma ivdep
     for (unsigned int y = 1; y < N-1; ++y) {
@@ -87,7 +84,7 @@ void write_png(float * current, int iter) {
     uint8_t * image = malloc(3 * N * N * sizeof(uint8_t));
     float maxval = fmaxf(SOURCE_TEMP, BOUNDARY_TEMP);
 
-    #pragma omp parallel for collapse(2)
+    //#pragma omp parallel for collapse(2)
     for (unsigned int y = 0; y < N; ++y) {
         for (unsigned int x = 0; x < N; ++x) {
             unsigned int i = y*N+x;
