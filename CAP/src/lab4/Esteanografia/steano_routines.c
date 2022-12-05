@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <math.h>
 #include <malloc.h>
@@ -14,7 +13,7 @@ void im2imRGB(uint8_t *im, int w, int h, t_sRGB *imRGB)
 {
 	imRGB->w = w;
 	imRGB->h = h;
-
+	// se puede poner un pragma target collapse(2). NO hace falta el ivdep, porque estamos trabajando a nivel openmp
 	for (int i=0; i<h; i++)
 		for (int j=0; j<w; j++)
 		{
@@ -29,7 +28,7 @@ void imRGB2im(t_sRGB *imRGB, uint8_t *im, int *w, int *h)
 	int w_ = imRGB->w;
 	*w = imRGB->w;
 	*h = imRGB->h;
-
+	
 	for (int i=0; i<*h; i++)
 		for (int j=0; j<*w; j++)
 		{
@@ -64,7 +63,9 @@ void ycbcr2rgb(t_sYCrCb *in, t_sRGB *out){
 	int w = in->w;
 	out->w = in->w;
 	out->h = in->h;
-
+	// Llevarlo a kernel.
+	#pragma omp target update to(out)
+	#pragma omp target teams distribute parallel for collapse (2)
 	for (int i = 0; i < in->h; i++) {
 		for (int j = 0; j < in->w; j++) {
 
@@ -84,6 +85,8 @@ void ycbcr2rgb(t_sYCrCb *in, t_sRGB *out){
 			else if (out->B[i*w+j] > 255) out->B[i*w+j] = 255;
 		}
 	}
+	#pragma omp target update from (out)
+
 }
 
 void get_dct8x8_params(float *mcosine, float *alpha)
@@ -106,7 +109,8 @@ void dct8x8_2d(float *in, float *out, int width, int height, float *mcosine, flo
 {
 	int bM=8;
 	int bN=8;
-
+	// Usar pragma collapse (4) para paralelizar los 4 primeros bucles 
+	#pragma omp parallel for collapse(4)
 	for(int bi=0; bi<height/bM; bi++)
 	{
 		int stride_i = bi * bM;
@@ -117,6 +121,7 @@ void dct8x8_2d(float *in, float *out, int width, int height, float *mcosine, flo
 			{
 				for (int j=0; j<bN; j++)
 				{
+					// No paralelizar los dos bucles
 					float tmp = 0.0;
 					for (int ii=0; ii < bM; ii++) 
 					{
@@ -134,7 +139,8 @@ void idct8x8_2d(float *in, float *out, int width, int height, float *mcosine, fl
 {
 	int bM=8;
 	int bN=8;
-
+	
+	#pragma omp parallel for collapse(4)
 	for(int bi=0; bi<height/bM; bi++)
 	{
 		int stride_i = bi * bM;
@@ -174,6 +180,7 @@ void insert_msg(float *img, int width, int height, char *msg, int msg_length)
 	if(bsI*bsJ<msg_length*8)
 		printf("Image not enough to save message!!!\n");
 
+	// Poco nivel de paralelismo. NO es necesario el target collapse(2)
 	for(int c=0; c<msg_length; c++)
 		for(int b=0; b<8; b++)
 		{
@@ -279,17 +286,23 @@ void encoder(char *file_in, char *file_out, char *msg, int msg_len)
 	get_dct8x8_params(mcosine, alpha);
 
 	double start = omp_get_wtime();
+	#pragma omp target enter data map(to: imYCrCb, ) map (tofrom: imRGB[0:20]) {
 
-	im2imRGB(im, w, h, &imRGB);
-	rgb2ycbcr(&imRGB, &imYCrCb);
-	dct8x8_2d(imYCrCb.Y, Ydct, imYCrCb.w, imYCrCb.h, mcosine, alpha);
+		im2imRGB(im, w, h, &imRGB);
+		rgb2ycbcr(&imRGB, &imYCrCb);
+		//paralelizar
+		dct8x8_2d(imYCrCb.Y, Ydct, imYCrCb.w, imYCrCb.h, mcosine, alpha);
 
-	// Insert Message		
-	insert_msg(Ydct, imYCrCb.w, imYCrCb.h, msg, msg_len);
+		// Insert Message		
+		//paralelizar
+		insert_msg(Ydct, imYCrCb.w, imYCrCb.h, msg, msg_len);
 
-	idct8x8_2d(Ydct, imYCrCb.Y, imYCrCb.w, imYCrCb.h, mcosine, alpha);
-   	ycbcr2rgb(&imYCrCb, &imRGB);
-	imRGB2im(&imRGB, im_out, &w, &h);
+		//paralelizar
+		idct8x8_2d(Ydct, imYCrCb.Y, imYCrCb.w, imYCrCb.h, mcosine, alpha);
+		ycbcr2rgb(&imYCrCb, &imRGB);
+
+		imRGB2im(&imRGB, im_out, &w, &h);
+	}
 
 	double stop = omp_get_wtime();
 	printf("Encoding time=%f sec.\n", stop-start);
@@ -327,13 +340,14 @@ void decoder(char *file_in, char *msg_decoded, int msg_len)
 	get_dct8x8_params(mcosine, alpha);
 
 	double start = omp_get_wtime();
-
-	im2imRGB(im, w, h, &imRGB);
-	rgb2ycbcr(&imRGB, &imYCrCb);
-	dct8x8_2d(imYCrCb.Y, Ydct, imYCrCb.w, imYCrCb.h, mcosine, alpha);
-		
-	extract_msg(Ydct, imYCrCb.w, imYCrCb.h, msg_decoded, msg_len);
-
+	// to: datos que mandamos a la GPU. No se puede hacer tofrom para usar los que se tienen que pasar entre el host y la GPU. Usar to y luego from.   
+	#pragma omp target enter data map(to: im, w, h, imRGB) map (from: imRGB, imYCrCb) {
+		im2imRGB(im, w, h, &imRGB);
+		rgb2ycbcr(&imRGB, &imYCrCb);
+		dct8x8_2d(imYCrCb.Y, Ydct, imYCrCb.w, imYCrCb.h, mcosine, alpha);
+		// Llamar a un kernel
+		extract_msg(Ydct, imYCrCb.w, imYCrCb.h, msg_decoded, msg_len);
+	}
 	double stop = omp_get_wtime();
 	printf("Decoding time=%f sec.\n", stop-start);
 
