@@ -14,6 +14,7 @@ void im2imRGB(uint8_t *im, int w, int h, t_sRGB *imRGB)
 	imRGB->w = w;
 	imRGB->h = h;
 	// se puede poner un pragma target collapse(2). NO hace falta el ivdep, porque estamos trabajando a nivel openmp
+	#pragma omp target teams distribute parallel for collapse(2)
 	for (int i=0; i<h; i++)
 		for (int j=0; j<w; j++)
 		{
@@ -28,7 +29,7 @@ void imRGB2im(t_sRGB *imRGB, uint8_t *im, int *w, int *h)
 	int w_ = imRGB->w;
 	*w = imRGB->w;
 	*h = imRGB->h;
-	
+	#pragma omp target teams distribute parallel for collapse (2)
 	for (int i=0; i<*h; i++)
 		for (int j=0; j<*w; j++)
 		{
@@ -46,6 +47,7 @@ void rgb2ycbcr(t_sRGB *in, t_sYCrCb *out)
 	out->w = in->w;
 	out->h = in->h;
 
+	//#pragma omp target teams distribute parallel for collapse (2)
 	for (int i = 0; i < in->h; i++) {
 		for (int j = 0; j < in->w; j++) {
 
@@ -64,7 +66,8 @@ void ycbcr2rgb(t_sYCrCb *in, t_sRGB *out){
 	out->w = in->w;
 	out->h = in->h;
 	// Llevarlo a kernel.
-	#pragma omp target update to(out)
+	//#pragma omp target update to(out)
+	//#pragma omp target teams distribute parallel for collapse (2)
 	#pragma omp target teams distribute parallel for collapse (2)
 	for (int i = 0; i < in->h; i++) {
 		for (int j = 0; j < in->w; j++) {
@@ -85,7 +88,7 @@ void ycbcr2rgb(t_sYCrCb *in, t_sRGB *out){
 			else if (out->B[i*w+j] > 255) out->B[i*w+j] = 255;
 		}
 	}
-	#pragma omp target update from (out)
+	//#pragma omp target update from (out)
 
 }
 
@@ -110,7 +113,7 @@ void dct8x8_2d(float *in, float *out, int width, int height, float *mcosine, flo
 	int bM=8;
 	int bN=8;
 	// Usar pragma collapse (4) para paralelizar los 4 primeros bucles 
-	#pragma omp parallel for collapse(4)
+	#pragma omp target teams distribute parallel for collapse(4)
 	for(int bi=0; bi<height/bM; bi++)
 	{
 		int stride_i = bi * bM;
@@ -140,7 +143,7 @@ void idct8x8_2d(float *in, float *out, int width, int height, float *mcosine, fl
 	int bM=8;
 	int bN=8;
 	
-	#pragma omp parallel for collapse(4)
+	#pragma omp target teams distribute parallel for collapse(4)
 	for(int bi=0; bi<height/bM; bi++)
 	{
 		int stride_i = bi * bM;
@@ -181,6 +184,7 @@ void insert_msg(float *img, int width, int height, char *msg, int msg_length)
 		printf("Image not enough to save message!!!\n");
 
 	// Poco nivel de paralelismo. NO es necesario el target collapse(2)
+	//#pragma omp target teams distribute  parallel for collapse (2)
 	for(int c=0; c<msg_length; c++)
 		for(int b=0; b<8; b++)
 		{
@@ -226,6 +230,7 @@ void extract_msg(float *img, int width, int height, char *msg, int msg_length)
 	int bi = 0;
 	int bj = 0;
 	
+	//#pragma omp target teams distribute parallel for collapse (2)
 	for(int c=0; c<msg_length; c++){
 		char ch=0;
 
@@ -286,8 +291,10 @@ void encoder(char *file_in, char *file_out, char *msg, int msg_len)
 	get_dct8x8_params(mcosine, alpha);
 
 	double start = omp_get_wtime();
-	#pragma omp target enter data map(to: imYCrCb, ) map (tofrom: imRGB[0:20]) {
-
+	#pragma omp target data map(to: im, w, h, imRGB, imYCrCb, Ydct, msg, msg_len, mcosine, alpha, im_out) map (from: imYCrCb, imRGB, w, h, im_out) 
+	{
+		int is_cpu = omp_is_initial_device();
+		printf("Running on %s\n", is_cpu ? "CPU" : "GPU");
 		im2imRGB(im, w, h, &imRGB);
 		rgb2ycbcr(&imRGB, &imYCrCb);
 		//paralelizar
@@ -341,7 +348,10 @@ void decoder(char *file_in, char *msg_decoded, int msg_len)
 
 	double start = omp_get_wtime();
 	// to: datos que mandamos a la GPU. No se puede hacer tofrom para usar los que se tienen que pasar entre el host y la GPU. Usar to y luego from.   
-	#pragma omp target enter data map(to: im, w, h, imRGB) map (from: imRGB, imYCrCb) {
+	#pragma omp target data map(to: im, w, h, imRGB, imYCrCb, Ydct, msg_decoded, msg_len, mcosine, alpha) map (from: imRGB, imYCrCb) 
+	{
+		int is_cpu = omp_is_initial_device();
+		printf("Running on %s\n", is_cpu ? "CPU" : "GPU");
 		im2imRGB(im, w, h, &imRGB);
 		rgb2ycbcr(&imRGB, &imYCrCb);
 		dct8x8_2d(imYCrCb.Y, Ydct, imYCrCb.w, imYCrCb.h, mcosine, alpha);
