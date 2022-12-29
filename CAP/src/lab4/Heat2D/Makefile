@@ -1,14 +1,20 @@
 CC=icx
-CFLAGS=-Wall -Wextra -std=c99 -O2 -xhost -qopt-report -fopenmp
 
-LDFLAGS=-lm
+CFLAGS=-O3 -lrt -std=c99 -fiopenmp
 
-all: heat.exe
+CFLAGS_OFFLOAD = $(CFLAGS) -fiopenmp -fopenmp-targets=spir64 
 
-heat.exe: heat.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+NAME=heat
 
-.PHONY: clean
+default: host gpu
 
-clean:
-	rm -rf *.o *opt *yaml heat.exe
+host:
+	$(CC) $(CFLAGS) $(NAME).c -o $(NAME).host.exe $(LIB)
+
+gpu: omp_offload
+
+omp_offload:
+	$(CC) $(CFLAGS_OFFLOAD) $(NAME).c -o $(NAME).omp.exe $(LIB)
+
+clean: 
+	rm -f __hmpp_*  *.exe
